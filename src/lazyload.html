@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="http://how2j.cn/study/js/jquery/2.0.0/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+        img {
+            display: block;
+         
+            width: 400px;
+            height: 400px;
+        }
+    </style>
+</head>
+
+    <body>
+        <img src="default.jpg" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+        <img src="default.jpg" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+        <img src="default.jpg" data-src="http://ww1.sinaimg.cn/large/006y8mN6gw1fa7kaed2hpj30sg0l9q54.jpg" alt="">
+        <img src="default.jpg" data-src="http://ww1.sinaimg.cn/large/006y8mN6gw1fa7kaed2hpj30sg0l9q54.jpg" alt="">
+        <img src="default.jpg" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+        <img src="default.jpg" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+        <img src="default.jpg" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+        <img src="default.jpg" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+        <img src="default.jpg" data-src="http://ww1.sinaimg.cn/large/006y8mN6gw1fa7kaed2hpj30sg0l9q54.jpg" alt="">
+        <img src="default.jpg" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+        <img src="default.jpg" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+    </body>
+    <script>
+        //图片懒加载
+        var n=0;
+        var num=$("img").length;
+        var img=$("img");
+        lazyload();
+        //$(window).scroll(lazyload);
+          //节流函数进行优化
+          var throttle=function(fn,delay,atleast){
+            var timer=null;
+            var previous=null;
+            return function(){
+                var now=+new Date();
+                if(!previous){previous=now}
+                if(now-previous>atleast){
+                    fn();
+                    previous=now;
+                }
+                else{
+                    clearTimeout(timer);
+                    timer=setTimeout(function(){fn();},delay);
+                }
+            }
+        };
+        window.addEventListener('scroll',throttle(lazyload,500,1000));
+        function lazyload(event){
+            for(var i=n;i<num;i++){
+                if(img.eq(i).offset().top<parseInt($(window).height())+parseInt($(window).scrollTop())){
+                   if(img.eq(i).attr("src")=="default.jpg"){
+                       var src=img.eq(i).attr("data-src");
+                       img.eq(i).attr("src",src);
+                       n=i+1;
+                   } 
+                }
+            }
+        };
+      
+   </script>
+</html>
